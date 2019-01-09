@@ -1,7 +1,6 @@
 const { GraphQLScalarType } = require('graphql')
 const { Kind } = require('graphql/language')
 const fetch = require('node-fetch')
-const fs = require('fs')
 
 function sanify(object) {
   const list = []
@@ -58,6 +57,31 @@ module.exports = {
             fileURL:  event.filepathURL,
             editURL:  event.editpathURL,
             websitePath: event.url
+          }
+        }
+      })
+    },
+    async resources() {
+      const json = await fetch('https://demo.digital.gov/resources/index.json')
+      const parsed = await json.json()
+      return parsed.items.map((resource) => {
+        resource.authors = resource.authors || {}
+        resource.topics = resource.topics || {}
+        return {
+          title:   resource.title,
+          deck:    resource.deck || null,
+          summary: resource.summary,
+          authors: sanify(resource.authors),
+          topics:  sanify(resource.topics),
+          datePublished: new Date(resource.date_published),
+          dateModified:  new Date(resource.date_modified),
+          branch: resource.branch,
+          location: {
+            fileName: resource.filename,
+            filePath: resource.filepath,
+            fileURL:  resource.filepathURL,
+            editURL:  resource.editpathURL,
+            websitePath: resource.url
           }
         }
       })
