@@ -1,0 +1,23 @@
+{
+  "name": "digitalgov-workflow-graphql",
+  "version": "1.0.0",
+  "description": "The backend for digitalgov-workflow-react.",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node"
+  },
+  "main": "server.js",
+  "author": "Felix Mattick",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "apollo-server": "^2.3.1",
+    "casual": "^1.5.19",
+    "graphql": "^14.0.2",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "repository": "https://github.com/arch-lord/digitalgov-workflow-graphql.git"
+}
