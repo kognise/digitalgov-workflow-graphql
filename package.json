@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "The backend for digitalgov-workflow-react.",
   "scripts": {
-    "dev": "nodemon",
-    "start": "node"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "main": "server.js",
   "author": "Felix Mattick",
