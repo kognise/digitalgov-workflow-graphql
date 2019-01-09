@@ -32,7 +32,19 @@ type Event {
   location: Location
 }
 
+type Service {
+  title: String,
+  summary: String,
+  deck: String,
+  datePublished: Date,
+  dateModified: Date,
+  authors: [SlugAndName]
+  branch: String,
+  location: Location
+}
+
 type Query {
-  events: [Event]
+  events: [Event],
+  services: [Service]
 }
 `

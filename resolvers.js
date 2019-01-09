@@ -1,6 +1,18 @@
 const { GraphQLScalarType } = require('graphql')
 const { Kind } = require('graphql/language')
 const fetch = require('node-fetch')
+const fs = require('fs')
+
+function sanify(object) {
+  const list = []
+  for (let slug in object) {
+    list.push({
+      slug,
+      name: object[slug]
+    })
+  }
+  return list
+}
 
 module.exports = {
   Date: new GraphQLScalarType({
@@ -26,21 +38,7 @@ module.exports = {
       return parsed.items.map((event) => {
         const splitStart = event.start_time.split(' ')
         const splitEnd = event.end_time.split(' ')
-        const types = []
-        for (let slug in event.event_type) {
-          types.push({
-            slug,
-            name: event.event_type[slug]
-          })
-        }
         event.topics = event.topics || {}
-        const topics = []
-        for (let slug in event.topics) {
-          topics.push({
-            slug,
-            name: event.topics[slug]
-          })
-        }
         return {
           title:   event.title,
           summary: event.summary,
@@ -48,7 +46,8 @@ module.exports = {
           dateModified:  new Date(event.date_modified),
           start: new Date(event.start_date + ', ' + splitStart.slice(0, splitStart.length - 1).join(' ')),
           end:   new Date(event.end_date + ', ' + splitEnd.slice(0, splitEnd.length - 1).join(' ')),
-          types, topics,
+          types:  sanify(event.event_type),
+          topics: sanify(event.topics),
           organizer: event.event_organizer,
           host: event.host,
           registrationURL: event.registration_url,
@@ -59,6 +58,29 @@ module.exports = {
             fileURL:  event.filepathURL,
             editURL:  event.editpathURL,
             websitePath: event.url
+          }
+        }
+      })
+    },
+    async services() {
+      const json = await fetch('https://demo.digital.gov/services/index.json')
+      const parsed = await json.json()
+      return parsed.items.map((service) => {
+        service.authors = service.authors || {}
+        return {
+          title:   service.title,
+          deck:    service.deck || null,
+          summary: service.summary,
+          authors: sanify(service.authors),
+          datePublished: new Date(service.date_published),
+          dateModified:  new Date(service.date_modified),
+          branch: service.branch,
+          location: {
+            fileName: service.filename,
+            filePath: service.filepath,
+            fileURL:  service.filepathURL,
+            editURL:  service.editpathURL,
+            websitePath: service.url
           }
         }
       })
