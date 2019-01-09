@@ -31,12 +31,37 @@ module.exports = {
     }
   }),
   Query: {
+    async posts() {
+      const json   = await fetch('https://demo.digital.gov/posts/index.json')
+      const parsed = await json.json()
+      return parsed.items.map((post) => {
+        post.authors = post.authors || {}
+        post.topics  = post.topics  || {}
+        return {
+          title:   post.title,
+          deck:    post.deck || null,
+          summary: post.summary,
+          authors: sanify(post.authors),
+          topics:  sanify(post.topics),
+          datePublished: new Date(post.date_published),
+          dateModified:  new Date(post.date_modified),
+          branch: post.branch,
+          location: {
+            fileName: post.filename,
+            filePath: post.filepath,
+            fileURL:  post.filepathURL,
+            editURL:  post.editpathURL,
+            websitePath: post.url
+          }
+        }
+      })
+    },
     async events() {
-      const json = await fetch('https://demo.digital.gov/events/index.json')
+      const json   = await fetch('https://demo.digital.gov/events/index.json')
       const parsed = await json.json()
       return parsed.items.map((event) => {
         const splitStart = event.start_time.split(' ')
-        const splitEnd = event.end_time.split(' ')
+        const splitEnd   = event.end_time.split(' ')
         event.topics = event.topics || {}
         return {
           title:   event.title,
@@ -62,11 +87,11 @@ module.exports = {
       })
     },
     async resources() {
-      const json = await fetch('https://demo.digital.gov/resources/index.json')
+      const json   = await fetch('https://demo.digital.gov/resources/index.json')
       const parsed = await json.json()
       return parsed.items.map((resource) => {
         resource.authors = resource.authors || {}
-        resource.topics = resource.topics || {}
+        resource.topics  = resource.topics  || {}
         return {
           title:   resource.title,
           deck:    resource.deck || null,
