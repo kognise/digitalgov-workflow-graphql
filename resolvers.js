@@ -133,6 +133,27 @@ module.exports = {
           }
         }
       })
+    },
+    async topics() {
+      const json = await fetch('https://demo.digital.gov/topics/v1/json')
+      const parsed = await json.json()
+      return parsed.items.map((topic) => {
+        return {
+          san: {
+            slug: topic.slug,
+            name: topic.display_name
+          },
+          weight: parseInt(topic.weight),
+          branch: topic.branch,
+          location: {
+            fileName: topic.filename,
+            filePath: topic.filepath,
+            fileURL:  topic.filepathURL,
+            editURL:  topic.editpathURL,
+            websitePath: null
+          }
+        }
+      })
     }
   }
 }

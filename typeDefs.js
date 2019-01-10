@@ -67,10 +67,18 @@ type Service {
   location: Location
 }
 
+type Topic {
+  san: SlugAndName
+  weight: Int
+  branch: String
+  location: Location
+}
+
 type Query {
   posts: [Post]
   events: [Event]
   resources: [Resource]
   services: [Service]
+  topics: [Topic]
 }
 `
