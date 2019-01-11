@@ -154,6 +154,34 @@ module.exports = {
           }
         }
       })
+    },
+    async authors() {
+      // I am loading the JSON from a local file
+      // that I edited that is actually valid JSON
+
+      // const json = await fetch('https://digital.gov/authors/v1/json/')
+      // const parsed = await json.json()
+      const parsed = JSON.parse(require('fs').readFileSync('authors.json'))
+      return parsed.items.reduce((result, item) => {
+        const key = Object.keys(item)[0]
+        if (item[key] !== '_default') {
+          const author = item[key]
+          result.push({
+            san: {
+              slug: author.uid,
+              name: author.display_name
+            },
+            firstName: author.first_name,
+            lastName: author.last_name,
+            email: author.email,
+            github: author.github,
+            location: author.location,
+            bio: author.bio,
+            quote: author.quote
+          })
+        }
+        return result
+      }, [])
     }
   }
 }

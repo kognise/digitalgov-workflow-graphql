@@ -74,11 +74,24 @@ type Topic {
   location: Location
 }
 
+type Author {
+  san: SlugAndName
+  firstName: String
+  lastName: String
+  email: String
+  twitter: String
+  github: String
+  location: String
+  bio: String
+  quote: String
+}
+
 type Query {
   posts: [Post]
   events: [Event]
   resources: [Resource]
   services: [Service]
   topics: [Topic]
+  authors: [Author]
 }
 `
