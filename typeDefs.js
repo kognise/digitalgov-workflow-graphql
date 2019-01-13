@@ -102,5 +102,6 @@ type Query {
   services: [Service]
   topics: [Topic]
   authors: [Author]
+  sources: [Source]
 }
 `
