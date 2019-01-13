@@ -86,6 +86,15 @@ type Author {
   quote: String
 }
 
+type Source {
+  san: SlugAndName
+  summary: String
+  domain: String
+  branch: String
+  icon: String
+  location: Location
+}
+
 type Query {
   posts: [Post]
   events: [Event]

@@ -182,6 +182,28 @@ module.exports = {
         }
         return result
       }, [])
+    },
+    async sources() {
+      const json = await fetch('https://demo.digital.gov/sources/index.json')
+      const parsed = await json.json()
+      return parsed.items.map((source) => {
+        return {
+          san: {
+            slug: source.slug,
+            name: source.name
+          },
+          summary: source.summary,
+          domain: source.domain,
+          icon: source.icon,
+          location: {
+            fileName: source.filename,
+            filePath: source.filepath,
+            fileURL:  source.filepathURL,
+            editURL:  source.editpathURL,
+            websitePath: source.url
+          }
+        }
+      })
     }
   }
 }
