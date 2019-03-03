@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "main": "server.js",
-  "author": "Felix Mattick",
+  "author": "Kognise",
   "license": "MIT",
   "private": false,
   "dependencies": {
@@ -19,5 +19,5 @@
   "devDependencies": {
     "nodemon": "^1.18.9"
   },
-  "repository": "https://github.com/arch-lord/digitalgov-workflow-graphql.git"
+  "repository": "https://github.com/kognise/digitalgov-workflow-graphql.git"
 }
