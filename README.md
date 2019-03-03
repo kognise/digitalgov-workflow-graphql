@@ -1,1 +1,1 @@
-This is the backend for [digitalgov-workflow-react](https://github.com/arch-lord/digitalgov-workflow-react).
+This is the backend for [digitalgov-workflow-react](https://github.com/kognise/digitalgov-workflow-react).
